@@ -27,8 +27,7 @@ Norwegian resources for SeaMonkey.
 Norweskie pliki jêzykowe dla SeaMonkeya.
 
 %prep
-%setup -q -c -T
-unzip %{SOURCE0}
+%setup -q -c
 unzip -o %{SOURCE1}
 install %{SOURCE2} .
 ./gen-installed-chrome.sh locale bin/chrome/{NO,nb-NO,nb-unix}.jar \
