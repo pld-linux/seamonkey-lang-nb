@@ -1,13 +1,16 @@
+%define	_lang	nb
+%define	_reg	NO
+%define	_lare	%{_lang}-%{_reg}
 Summary:	Norwegian resources for SeaMonkey
 Summary(pl):	Norweskie pliki jêzykowe dla SeaMonkeya
-Name:		seamonkey-lang-nb
+Name:		seamonkey-lang-%{_lang}
 Version:	1.0
 Release:	1
 License:	GPL
 Group:		X11/Applications/Networking
-Source0:	http://ftp.mozilla.org/pub/mozilla.org/seamonkey/releases/%{version}/contrib-localized/seamonkey-%{version}.nb-NO.langpack.xpi
+Source0:	http://ftp.mozilla.org/pub/mozilla.org/seamonkey/releases/%{version}/contrib-localized/seamonkey-%{version}.%{_lare}.langpack.xpi
 # Source0-md5:	935b8004f94a8febefdf78d6a022bb43
-Source1:	http://www.mozilla-enigmail.org/downloads/lang/0.9x/enigmail-nb-NO-0.9x.xpi
+Source1:	http://www.mozilla-enigmail.org/downloads/lang/0.9x/enigmail-%{_lare}-0.9x.xpi
 # Source1-md5:	2aa5734f939734bdc05a29e0f2cf1c3e
 Source2:	gen-installed-chrome.sh
 URL:		http://www.mozilla.org/projects/seamonkey/
@@ -28,20 +31,20 @@ Norweskie pliki jêzykowe dla SeaMonkeya.
 
 %prep
 %setup -q -c
-unzip -o %{SOURCE1}
+%{__unzip} -o -qq %{SOURCE1}
 install %{SOURCE2} .
-./gen-installed-chrome.sh locale bin/chrome/{NO,nb-NO,nb-unix}.jar \
-	> lang-nb-installed-chrome.txt
-./gen-installed-chrome.sh locale chrome/enigmail-nb-NO.jar \
-	>> lang-nb-installed-chrome.txt
+./gen-installed-chrome.sh locale bin/chrome/{%{_reg},%{_lare},%{_lang}-unix}.jar \
+	> lang-%{_lang}-installed-chrome.txt
+./gen-installed-chrome.sh locale chrome/enigmail-%{_lare}.jar \
+	>> lang-%{_lang}-installed-chrome.txt
 
 %install
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT%{_chromedir}
 
-install bin/chrome/{NO,nb-NO,nb-unix}.jar $RPM_BUILD_ROOT%{_chromedir}
-install chrome/enigmail-nb-NO.jar $RPM_BUILD_ROOT%{_chromedir}
-install lang-nb-installed-chrome.txt $RPM_BUILD_ROOT%{_chromedir}
+install bin/chrome/{%{_reg},%{_lare},%{_lang}-unix}.jar $RPM_BUILD_ROOT%{_chromedir}
+install chrome/enigmail-%{_lare}.jar $RPM_BUILD_ROOT%{_chromedir}
+install lang-%{_lang}-installed-chrome.txt $RPM_BUILD_ROOT%{_chromedir}
 cp -r bin/defaults $RPM_BUILD_ROOT%{_datadir}/seamonkey
 
 %clean
@@ -55,10 +58,10 @@ rm -rf $RPM_BUILD_ROOT
 
 %files
 %defattr(644,root,root,755)
-%{_chromedir}/NO.jar
-%{_chromedir}/nb-NO.jar
-%{_chromedir}/nb-unix.jar
-%{_chromedir}/enigmail-nb-NO.jar
-%{_chromedir}/lang-nb-installed-chrome.txt
-%{_datadir}/seamonkey/defaults/messenger/NO
-%{_datadir}/seamonkey/defaults/profile/NO
+%{_chromedir}/%{_reg}.jar
+%{_chromedir}/%{_lare}.jar
+%{_chromedir}/%{_lang}-unix.jar
+%{_chromedir}/enigmail-%{_lare}.jar
+%{_chromedir}/lang-%{_lang}-installed-chrome.txt
+%{_datadir}/seamonkey/defaults/messenger/%{_reg}
+%{_datadir}/seamonkey/defaults/profile/%{_reg}
